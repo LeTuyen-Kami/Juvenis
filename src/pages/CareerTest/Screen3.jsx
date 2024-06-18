@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../../components/Button";
 import Table from "../../components/Table";
 
@@ -106,14 +107,46 @@ const data = [
   },
 ];
 
-const Screen3 = ({ onChangeScreen }) => {
+const tableName = ["A", "B", "C", "D", "E", "F"];
+
+const listTable = [...new Array(6)].map((_, index) => ({
+  id: index,
+  name: `Table ${tableName[index]}`,
+  data: [...data].sort(() => Math.random() - 0.5),
+}));
+
+const Screen3 = ({ onChangeScreen, setSelectData }) => {
+  const [tableIndex, setTableIndex] = useState(0);
+
+  const onContinue = () => {
+    if (tableIndex === listTable.length - 1) {
+      onChangeScreen(4);
+    } else {
+      setTableIndex(tableIndex + 1);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 justify-center items-center p-2">
       <div className={"md:w-[70vw] w-[100%] md:max-w-[1600px] relative"}>
-        <div className={"text-2xl font-bold text-left self-start my-2"}>
-          Table 1
-        </div>
-        <Table columns={columns} data={data} />
+        {listTable.map((table, index) => {
+          return (
+            <div
+              key={table.id}
+              className={`${index === tableIndex ? "block" : "hidden"}`}
+            >
+              <div className={`text-2xl font-bold text-left self-start my-2`}>
+                {table.name}
+              </div>
+              <Table
+                columns={columns}
+                data={table.data}
+                tableId={table.id}
+                onSelect={setSelectData}
+              />
+            </div>
+          );
+        })}
         <div
           className="absolute bottom-0 w-[14vw] max-md:hidden"
           style={{
@@ -126,7 +159,7 @@ const Screen3 = ({ onChangeScreen }) => {
       <div className="md:hidden self-start">
         <ScoreDescriptions />
       </div>
-      <Button className={"mt-10"} onClick={() => onChangeScreen(4)}>
+      <Button className={"mt-10"} onClick={onContinue}>
         Tiếp tục
       </Button>
     </div>

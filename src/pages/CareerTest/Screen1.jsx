@@ -9,7 +9,7 @@ const Step = ({ stepNumber, description }) => (
 
 const Screen1 = ({ onChangeScreen }) => {
   const steps = [
-    "Cho điểm từng nội dung của 6 bảng, mỗi nội dung cho điểm ở 5 mức độ đng: (1) Chưa bao giờ đng: 0 điểm; (2) đng trong một vài trường hợp: 1 điểm; (3) đng trong khoảng ½ trường hợp: 2 điểm; (4) đng trong đa số các trường hợp: 3 điểm; (5) đng trong tất cả trường hợp: 4 điểm",
+    "Cho điểm từng nội dung của 6 bảng, mỗi nội dung cho điểm ở 5 mức độ đúng: (1) Chưa bao giờ đúng: 0 điểm; (2) đúng trong một vài trường hợp: 1 điểm; (3) đúng trong khoảng ½ trường hợp: 2 điểm; (4) đúng trong đa số các trường hợp: 3 điểm; (5) đúng trong tất cả trường hợp: 4 điểm",
     "Cộng điểm của từng bảng, xác định bảng có điểm số cao nhất.",
     "Tra sở thích, ngành nghề phù hợp theo bảng cùng tên ở trang số 2",
   ];

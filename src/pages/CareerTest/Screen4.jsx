@@ -22,62 +22,56 @@ const data = {
   ],
 };
 
-const points = [
-  {
-    title: "Bảng A",
-    value: 10,
-    description: "Bạn đạt điểm cao",
-  },
-  {
-    title: "Bảng B",
-    value: 10,
-    description: "Bạn đạt điểm trung bình",
-  },
-  {
-    title: "Bảng C",
-    value: 10,
-    description: "Bạn đạt điểm thấp",
-  },
-  {
-    title: "Bảng C",
-    value: 10,
-    description: "Bạn đạt điểm thấp",
-  },
-  {
-    title: "Bảng C",
-    value: 10,
-    description: "Bạn đạt điểm thấp",
-  },
-  {
-    title: "Bảng C",
-    value: 10,
-    description: "Bạn đạt điểm thấp",
-  },
-];
+const tableName = ["A", "B", "C", "D", "E", "F"];
 
-const Point = ({ title, value, description }) => {
+const Point = ({ title, value }) => {
   return (
     <div
       className={
         "text-base font-normal flex items-center flex-col mt-4 uppercase"
       }
     >
-      {title}
+      Bảng {title}
       <div className={"p-4 shadow px-10 rounded mt-4"}>{value}</div>
     </div>
   );
 };
 
-const Screen4 = () => {
+const Screen4 = ({ selectData }) => {
+  const calculatePoint = () => {
+    const totalArray = Object.values(selectData).map((item) => {
+      const itemArray = Object.values(item);
+      const total = itemArray.reduce((acc, curr) => acc + (+curr - 1), 0);
+      return total;
+    });
+    return {
+      A: totalArray[0],
+      B: totalArray[1],
+      C: totalArray[2],
+      D: totalArray[3],
+      E: totalArray[4],
+      F: totalArray[5],
+    };
+  };
+
+  const calulatedPoint = calculatePoint();
+
+  console.log("calulatedPoint", calulatedPoint);
+
   return (
     <section className="flex flex-col px-5 items-center w-full mb-10">
       <div className={"self-start px-[10vw] mt-10 w-full"}>
         <h1 className="font-semibold text-2xl">KẾT QUẢ</h1>
         <p className={"font-bold text-base mt-4"}>Số điểm của bạn là:</p>
         <div className="flex md:flex-row gap-5 justify-between w-full flex-wrap">
-          {points.map((item, index) => (
-            <Point key={index} {...item} />
-          ))}
+          {[...Array(6)]
+            .map((_, idx) => ({
+              title: tableName[idx],
+              value: calulatedPoint[tableName[idx]],
+            }))
+            .map((item, index) => (
+              <Point key={index} {...item} />
+            ))}
         </div>
       </div>
 

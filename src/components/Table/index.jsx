@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, onSelect, tableId }) => {
   const [selectedValues, setSelectedValues] = useState({});
 
   const handleChange = (value, rowId) => {
-    console.log();
     setSelectedValues({
       ...selectedValues,
       [rowId]: value,
     });
   };
+
+  useEffect(() => {
+    onSelect((prev) => ({
+      ...prev,
+      [tableId]: selectedValues,
+    }));
+  }, [selectedValues, tableId]);
 
   const columnColor = (index) => {
     switch (index) {
