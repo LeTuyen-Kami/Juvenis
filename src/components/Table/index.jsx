@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Table = ({ columns, data, onSelect, tableId,name }) => {
+const Table = ({ columns, data, onSelect, tableId, name }) => {
   const [selectedValues, setSelectedValues] = useState({});
 
   const handleChange = (value, rowId) => {
@@ -33,7 +33,7 @@ const Table = ({ columns, data, onSelect, tableId,name }) => {
       case 4:
         return "purple";
       case 5:
-        return "yellow";
+        return "blue";
       default:
         return "blue";
     }
@@ -84,7 +84,7 @@ const Table = ({ columns, data, onSelect, tableId,name }) => {
                   <div
                     className={
                       index === 0
-                        ? `bg-blue-500 p-4  border-b border-blue-200 text-base text-white  ${
+                        ? `bg-blue-500 p-4  border-b border-blue-200 text-base text-white   ${
                             rowIdex === 0
                               ? "rounded-t-3xl"
                               : rowIdex === data.length - 1

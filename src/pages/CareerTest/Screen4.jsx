@@ -1,7 +1,15 @@
 import Container from "../../components/Container";
 
-
-const data = window?.data_quiz || []
+const txt = {
+  en: {
+    title: "RESULT",
+    result: "Your score is:",
+  },
+  vi: {
+    title: "KẾT QUẢ",
+    result: "Điểm của bạn là:",
+  },
+};
 
 const Point = ({ title, value }) => {
   return (
@@ -16,14 +24,16 @@ const Point = ({ title, value }) => {
   );
 };
 
-const Screen4 = ({ selectData }) => {
+const Screen4 = ({ selectData, data, lang = "en" }) => {
   const calculatePoint = () => {
     const totalArray = Object.keys(selectData).map((key) => {
       const item = selectData[key];
-      const itemArray = Object.values(item).map((item) => +item).filter(i=>i);
+      const itemArray = Object.values(item)
+        .map((item) => +item)
+        .filter((i) => i);
       const total = itemArray.reduce((acc, curr) => {
         return acc + (+curr - 1);
-      } , 0);
+      }, 0);
       return {
         id: key,
         title: item.name,
@@ -39,15 +49,13 @@ const Screen4 = ({ selectData }) => {
     const biggestTable = calulatedPoint.sort((a, b) => b.value - a.value)[0];
     const result = data?.find((table) => table.id === biggestTable.id);
     return result?.content?.result;
-  }
-
-  console.log(calulatedPoint,selectData);
+  };
 
   return (
     <section className="flex flex-col px-5 items-center w-full mb-10">
       <div className={"self-start px-[10vw] mt-10 w-full"}>
-        <h1 className="font-semibold text-2xl">KẾT QUẢ</h1>
-        <p className={"font-bold text-base mt-4"}>Số điểm của bạn là:</p>
+        <h1 className="font-semibold text-2xl">{txt[lang].title}</h1>
+        <p className={"font-bold text-base mt-4"}>{txt[lang].result}</p>
         <div className="flex md:flex-row gap-5 justify-between w-full flex-wrap">
           {/* {[...Array(6)]
             .map((_, idx) => ({
@@ -57,18 +65,22 @@ const Screen4 = ({ selectData }) => {
             .map((item, index) => (
               <Point key={index} {...item} />
             ))} */}
-            {
-              calulatedPoint.map((item, index) => (
-                <Point key={index} title={item.title} value={item?.value} />
-              ))
-            }
+          {calulatedPoint.map((item, index) => (
+            <Point key={index} title={item.title} value={item?.value} />
+          ))}
         </div>
       </div>
 
       <Container>
-        <div dangerouslySetInnerHTML={{__html: result()}} className="pt-10"></div>
-          
-{/* 
+        <div
+          style={{
+            listStyleType: "disc",
+          }}
+          dangerouslySetInnerHTML={{ __html: result() }}
+          className="pt-10"
+        ></div>
+
+        {/* 
 
         <div className={"font-bold text-lg mt-10"}>{data.title}</div>
         <div className={"text-base mt-6"}>
@@ -123,7 +135,6 @@ const Screen4 = ({ selectData }) => {
           </ul>
         </div>
        */}
-
       </Container>
     </section>
   );

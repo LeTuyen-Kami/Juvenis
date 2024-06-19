@@ -11,14 +11,23 @@ const columns = [
   { key: "column5", label: "5" },
 ];
 
-const data = window?.data_quiz || []
+const txt = {
+  en: {
+    continue: "Continue",
+    submit: "Submit",
+  },
+  vi: {
+    continue: "Tiếp tục",
+    submit: "Gửi",
+  },
+};
 
-const Screen3 = ({ onChangeScreen, setSelectData }) => {
+const Screen3 = ({ onChangeScreen, setSelectData, data, lang }) => {
   const [tableIndex, setTableIndex] = useState(0);
 
   const onContinue = () => {
     if (tableIndex === data?.length - 1) {
-      onChangeScreen(4);
+      onChangeScreen();
     } else {
       setTableIndex(tableIndex + 1);
     }
@@ -47,7 +56,7 @@ const Screen3 = ({ onChangeScreen, setSelectData }) => {
                   }
                   return column;
                 })}
-                data={table?.content?.list_question?.map((question,index) => {
+                data={table?.content?.list_question?.map((question, index) => {
                   return {
                     id: index,
                     name: question,
@@ -65,9 +74,9 @@ const Screen3 = ({ onChangeScreen, setSelectData }) => {
           );
         })}
         <div
-          className="absolute bottom-0 w-[14vw] max-md:hidden"
+          className="absolute bottom-0 w-[15vw] max-md:hidden pr-2"
           style={{
-            right: "-15vw",
+            right: "-14vw",
           }}
         >
           <ScoreDescriptions />
@@ -77,7 +86,7 @@ const Screen3 = ({ onChangeScreen, setSelectData }) => {
         <ScoreDescriptions />
       </div>
       <Button className={"mt-10"} onClick={onContinue}>
-        Tiếp tục
+        {txt[lang].continue}
       </Button>
     </div>
   );

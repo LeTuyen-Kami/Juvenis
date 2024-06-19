@@ -85,7 +85,7 @@ const languageTxt = {
   },
 };
 
-const Info = ({ onChangeScreen,showTitle = true, language = "vi" }) => {
+const Info = ({ onPressContinue, showTitle = true, language = "vi" }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -93,11 +93,17 @@ const Info = ({ onChangeScreen,showTitle = true, language = "vi" }) => {
   const [school, setSchool] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPhone, setErrorPhone] = useState("");
-  const enable = true;
-  // name && email && phone && !errorEmail && !errorPhone && birthYear && school;
+  const enable =
+    name && email && phone && !errorEmail && !errorPhone && birthYear && school;
 
   const _onChangeScreen = () => {
-    onChangeScreen();
+    onPressContinue({
+      name,
+      email,
+      phone,
+      birthYear,
+      school,
+    });
   };
 
   const onChangeEmail = (e) => {
@@ -120,13 +126,11 @@ const Info = ({ onChangeScreen,showTitle = true, language = "vi" }) => {
 
   return (
     <section className="flex flex-col px-5 items-center w-full">
-      {
-        showTitle && (
-          <h1 className="self-center text-2xl font-bold text-black mt-2 md:mt-0">
-            {languageTxt[language].title}
-          </h1>
-        )
-      }
+      {showTitle && (
+        <h1 className="self-center text-2xl font-bold text-black mt-2 md:mt-0">
+          {languageTxt[language].title}
+        </h1>
+      )}
       <Container className={"items-center min-h-[50vh] justify-center"}>
         <div className={"flex mt-10 max-md:flex-col w-full"}>
           <div

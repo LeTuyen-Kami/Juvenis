@@ -4,7 +4,7 @@ const Item = ({ item, onClick, selected }) => {
   return (
     <div
       onClick={() => onClick(item)}
-      className={`flex items-center justify-center hover:bg-blue-200 active:outline cursor-pointer p-10 bg-blue-100 rounded-3xl outline-blue-800 shadow-lg font-medium max-md:w-full ${
+      className={`flex items-center justify-center hover:bg-blue-200 active:outline cursor-pointer p-10 bg-blue-100 rounded-3xl outline-blue-800 shadow-lg font-semibold max-md:w-full uppercase ${
         selected ? "bg-blue-800 text-white" : ""
       }`}
     >
@@ -13,10 +13,12 @@ const Item = ({ item, onClick, selected }) => {
   );
 };
 
-const Screen2 = ({ onChangeScreen, selectedItem, onSelectItem,data }) => {
+const Screen2 = ({ onChangeScreen, selectedItem, onSelectItem, data }) => {
   return (
     <div className={"mb-10"}>
-      <div className={"text-center text-xl font-semibold"}>{selectedItem?.title || ""}</div>
+      <div className={"text-center text-xl font-semibold"}>
+        {selectedItem?.title || ""}
+      </div>
       <div className={"mt-10 flex flex-wrap gap-4 px-[10vw] justify-center"}>
         {data?.map((item, index) => {
           return (
@@ -30,11 +32,15 @@ const Screen2 = ({ onChangeScreen, selectedItem, onSelectItem,data }) => {
         })}
       </div>
       <div className={"flex justify-center mt-10"}>
-        <Button onClick={()=>{
-          if (selectedItem) {
-            onChangeScreen()
-          }
-        }}>Continue</Button>
+        <Button
+          onClick={() => {
+            if (selectedItem) {
+              onChangeScreen();
+            }
+          }}
+        >
+          Continue
+        </Button>
       </div>
     </div>
   );
