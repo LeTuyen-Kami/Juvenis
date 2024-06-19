@@ -16,7 +16,7 @@ const Item = ({ item, onClick, selected }) => {
 const Screen2 = ({ onChangeScreen, selectedItem, onSelectItem,data }) => {
   return (
     <div className={"mb-10"}>
-      <div className={"text-center text-xl font-semibold"}>Health Science</div>
+      <div className={"text-center text-xl font-semibold"}>{selectedItem?.title || ""}</div>
       <div className={"mt-10 flex flex-wrap gap-4 px-[10vw] justify-center"}>
         {data?.map((item, index) => {
           return (
@@ -30,7 +30,11 @@ const Screen2 = ({ onChangeScreen, selectedItem, onSelectItem,data }) => {
         })}
       </div>
       <div className={"flex justify-center mt-10"}>
-        <Button onClick={onChangeScreen}>Continue</Button>
+        <Button onClick={()=>{
+          if (selectedItem) {
+            onChangeScreen()
+          }
+        }}>Continue</Button>
       </div>
     </div>
   );

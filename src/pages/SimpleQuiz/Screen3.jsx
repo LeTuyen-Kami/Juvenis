@@ -47,7 +47,6 @@ const Screen3 = ({ selectedItem: _selectedItem, data,setUserChoice }) => {
     }
   });
 
-  console.log('category', category,'listChoice',listChoice)
 
   const onPressContinue = () => {
     const choice = listChoice[currentChoice];
@@ -70,9 +69,9 @@ const Screen3 = ({ selectedItem: _selectedItem, data,setUserChoice }) => {
 
   return (
     <div className={"mb-10"}>
-      <div className={"text-center text-xl font-semibold"}>Health Science</div>
+      <div className={"text-center text-xl font-semibold"}>{_selectedItem.title || ""}</div>
       <div className={"flex flex-col items-center"}>
-        <div className={"self-start px-[15vw]"}>{_selectedItem.title}</div>
+        <div className={"self-start px-[15vw]"}>{_selectedItem.title || ""}</div>
         <div className={"self-start px-[15vw] text-base text-[#024EA2]"}>
           Question {currentChoice + 1} of {listChoice.length}
         </div>
