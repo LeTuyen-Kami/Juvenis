@@ -13,30 +13,16 @@ const Item = ({ item, onClick, selected }) => {
   );
 };
 
-const listItemName = [
-  "INFORMATION TECHNOLOGY",
-  "FINANCE",
-  "BUSINESS MANAGEMENT",
-  "MARKETING & SALES",
-  "LAW",
-  "HUMAN SERVICES",
-  "HEALTH SCIENCE",
-  "ARCHITECTURE & CONSTRUCTION",
-  "TRANSPORTATION & LOGISTICS",
-  "EDUCATION & TRAINING",
-  "HOSPITALITY & TOURISM",
-];
-
-const Screen2 = ({ onChangeScreen, selectedItem, onSelectItem }) => {
+const Screen2 = ({ onChangeScreen, selectedItem, onSelectItem,data }) => {
   return (
     <div className={"mb-10"}>
       <div className={"text-center text-xl font-semibold"}>Health Science</div>
       <div className={"mt-10 flex flex-wrap gap-4 px-[10vw] justify-center"}>
-        {listItemName.map((item, index) => {
+        {data?.map((item, index) => {
           return (
             <Item
-              selected={selectedItem?.id === index}
-              item={{ title: item, id: index }}
+              selected={selectedItem?.id === item?.id}
+              item={item}
               onClick={onSelectItem}
               key={index}
             />
