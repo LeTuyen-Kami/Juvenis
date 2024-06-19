@@ -1,28 +1,7 @@
 import Container from "../../components/Container";
 
-const data = {
-  title: "BẠN THUỘC TUÝP NGƯỜI THỰC TẾ - REALISTIC",
-  ability:
-    "kỹ thuật, công nghệ, hệ thống; ưa thích làm việc với đồ vật, máy móc, động thực vật; thích làm các công việc ngoài trời. ",
-  careerFit:
-    " Các nghề về kiến trúc, an toàn lao động, nghề mộc, xây dựng, thủy sản, kỹ thuật, máy tàu thủy, lái xe, huấn luyện viên, nông – lâm nghiệp (quản lý trang trại, nhân giống cá, lâm nghiệp…), cơ khí (chế tạo máy, bảo trì và sữa chữa thiết bị, luyện kim, cơ khí ứng dụng, tự động...), điện - điện tử, địa lý - địa chất (đo đạc, vẽ bản đồ địa chính), dầu khí, hải dương học, quản lý công nghiệp... ",
-  careerFactor: [
-    "Công việc thể chất",
-    "Công việc cơ khí",
-    "Làm việc ngoài trời",
-    "Làm việc với động vật",
-    "Công việc thủ công",
-  ],
-  unCareerFactor: [
-    "Khoa học và công nghệ bao gồm y học, phần mềm, máy tính, khoa học thuần ty, toán học",
-    "Biểu đạt sáng tạo qua nghệ thuật như viết, vẽ, hội họa, âm nhạc, biểu diễn, cũng như nghệ thuật ẩm thực",
-    "Làm việc gần gũi với mọi người, gip đỡ mọi người hoặc dạy học",
-    "Lãnh đạo con người, giám sát con người, thuyết phục con người, quản l một doanh nghiệp, chính trị",
-    "Công việc lặp đi lặp lại yêu cầu sự tổ chức, công việc có tính cấu trc cao, công việc có tính chi tiết cao, hầu hết các công việc hành chính và tài chính",
-  ],
-};
 
-const tableName = ["A", "B", "C", "D", "E", "F"];
+const data = window?.data_quiz || []
 
 const Point = ({ title, value }) => {
   return (
@@ -31,7 +10,7 @@ const Point = ({ title, value }) => {
         "text-base font-normal flex items-center flex-col mt-4 uppercase"
       }
     >
-      Bảng {title}
+      {title}
       <div className={"p-4 shadow px-10 rounded mt-4"}>{value}</div>
     </div>
   );
@@ -39,24 +18,30 @@ const Point = ({ title, value }) => {
 
 const Screen4 = ({ selectData }) => {
   const calculatePoint = () => {
-    const totalArray = Object.values(selectData).map((item) => {
-      const itemArray = Object.values(item);
-      const total = itemArray.reduce((acc, curr) => acc + (+curr - 1), 0);
-      return total;
+    const totalArray = Object.keys(selectData).map((key) => {
+      const item = selectData[key];
+      const itemArray = Object.values(item).map((item) => +item).filter(i=>i);
+      const total = itemArray.reduce((acc, curr) => {
+        return acc + (+curr - 1);
+      } , 0);
+      return {
+        id: key,
+        title: item.name,
+        value: total,
+      };
     });
-    return {
-      A: totalArray[0],
-      B: totalArray[1],
-      C: totalArray[2],
-      D: totalArray[3],
-      E: totalArray[4],
-      F: totalArray[5],
-    };
+    return totalArray;
   };
 
   const calulatedPoint = calculatePoint();
 
-  console.log("calulatedPoint", calulatedPoint);
+  const result = () => {
+    const biggestTable = calulatedPoint.sort((a, b) => b.value - a.value)[0];
+    const result = data?.find((table) => table.id === biggestTable.id);
+    return result?.content?.result;
+  }
+
+  console.log(calulatedPoint,selectData);
 
   return (
     <section className="flex flex-col px-5 items-center w-full mb-10">
@@ -64,18 +49,27 @@ const Screen4 = ({ selectData }) => {
         <h1 className="font-semibold text-2xl">KẾT QUẢ</h1>
         <p className={"font-bold text-base mt-4"}>Số điểm của bạn là:</p>
         <div className="flex md:flex-row gap-5 justify-between w-full flex-wrap">
-          {[...Array(6)]
+          {/* {[...Array(6)]
             .map((_, idx) => ({
               title: tableName[idx],
               value: calulatedPoint[tableName[idx]],
             }))
             .map((item, index) => (
               <Point key={index} {...item} />
-            ))}
+            ))} */}
+            {
+              calulatedPoint.map((item, index) => (
+                <Point key={index} title={item.title} value={item?.value} />
+              ))
+            }
         </div>
       </div>
 
       <Container>
+        <div dangerouslySetInnerHTML={{__html: result()}} className="pt-10"></div>
+          
+{/* 
+
         <div className={"font-bold text-lg mt-10"}>{data.title}</div>
         <div className={"text-base mt-6"}>
           <span className={"font-semibold"}>
@@ -128,6 +122,8 @@ const Screen4 = ({ selectData }) => {
             ))}
           </ul>
         </div>
+       */}
+
       </Container>
     </section>
   );

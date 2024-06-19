@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Table = ({ columns, data, onSelect, tableId }) => {
+const Table = ({ columns, data, onSelect, tableId,name }) => {
   const [selectedValues, setSelectedValues] = useState({});
 
   const handleChange = (value, rowId) => {
@@ -13,7 +13,10 @@ const Table = ({ columns, data, onSelect, tableId }) => {
   useEffect(() => {
     onSelect((prev) => ({
       ...prev,
-      [tableId]: selectedValues,
+      [tableId]: {
+        ...selectedValues,
+        name,
+      },
     }));
   }, [selectedValues, tableId]);
 

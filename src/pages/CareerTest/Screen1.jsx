@@ -14,12 +14,14 @@ const Screen1 = ({ onChangeScreen }) => {
     "Tra sở thích, ngành nghề phù hợp theo bảng cùng tên ở trang số 2",
   ];
 
+  
+
   return (
     <section className="flex flex-col px-5 items-center w-full">
       <h1 className="self-center text-2xl font-bold text-black mt-2 md:mt-0">
         TRẮC NGHIỆM NGHỀ NGHIỆP
       </h1>
-      <Container>
+      <Container className={'mb-10'}>
         <section className="w-full">
           <br />
           {steps.map((description, idx) => (
