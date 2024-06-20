@@ -42,6 +42,7 @@ const CareerTest = () => {
         year_of_birth: userInfo.birthYear,
         school: userInfo.school,
         result: result,
+        category: 1,
       }),
     }).catch(() => {});
   };

@@ -48,6 +48,7 @@ export default function SimpleQuiz() {
         year_of_birth: userInfo.birthYear,
         school: userInfo.school,
         result: result,
+        category: 2,
       }),
     }).catch(() => {
       //
