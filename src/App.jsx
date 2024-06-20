@@ -16,8 +16,8 @@ import "./App.css";
 // ];
 
 function App() {
-  return <CareerTest />;
-  // return <SimpleQuiz />;
+  // return <CareerTest />;
+  return <SimpleQuiz />;
 
   // return (
   //   <Routes>

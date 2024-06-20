@@ -43,15 +43,15 @@ const Screen3 = ({ onChangeScreen, setSelectData, data, lang }) => {
               className={`${index === tableIndex ? "block" : "hidden"}`}
             >
               <div className={`text-2xl font-bold text-left self-start my-2`}>
-                {table.title?.split("(")[0]}
+                {table.title}
               </div>
               <Table
-                name={table.title?.split("(")[0]}
+                name={table?.title}
                 columns={columns.map((column) => {
                   if (column.key === "name") {
                     return {
                       ...column,
-                      label: table.title?.split("(")[1]?.split(")")[0],
+                      label: table?.content?.description,
                     };
                   }
                   return column;

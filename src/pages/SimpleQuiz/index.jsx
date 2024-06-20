@@ -4,37 +4,6 @@ import ScreenContainer from "../../components/ScreenContainer";
 import Screen2 from "./Screen2";
 import Screen3 from "./Screen3";
 
-// const data = [
-//   {
-//     id: "2",
-//     title: "Health Science",
-//     content: {
-//       list_question: [
-//         {
-//           group: "ETHICAL PATIENT INTERACTION",
-//           question:
-//             "Maddie is a certified holistic healer and has been promising her patients that her special concoction of tulip petals, coconut oil, and a ‘secret’ ingredient that she claims will cure almost any skin condition. However, after a chemist gets ahold of Maddie’s concoction and alerts customers that the ‘special’ ingredient is simply food coloring, Maddie is put out of business largely for:",
-//           type: "1",
-//           list_answer:
-//             "active listening | data breach | medical quackery | non-verbal communication",
-//           correct_answer: "2",
-//         },
-//         {
-//           group: "ETHICAL PATIENT INTERACTION",
-//           question:
-//             "Chrissy is speaking with her doctor but notices that he is tapping his foot and continuously looking at his watch. What do these behaviors MOST LIKELY make Chrissy think about her doctor?",
-//           type: "1",
-//           list_answer:
-//             "He is incredibly intelligent | He thinks she’s funny | He is very interested in what she is saying | He isn’t paying attention",
-//           correct_answer: "1",
-//         },
-//       ],
-//     },
-//     category: "2",
-//     lang: "en",
-//   },
-// ];
-
 const data = window?.data_quiz || [];
 
 export default function SimpleQuiz() {
@@ -47,7 +16,29 @@ export default function SimpleQuiz() {
     setScreen(screen);
   };
 
+  function formatQuestions(questions) {
+    return questions
+      ?.map?.((questionObj, index) => {
+        const questionNumber = index + 1;
+        const questionContent = questionObj?.question;
+        const userAnswer = questionObj?.selectedItem
+          ? questionObj?.selectedItem?.answer
+          : "N/A";
+        const correctAnswer =
+          questionObj?.list_answer?.[questionObj?.correct_answer];
+        const userInput =
+          questionObj?.selectedItem && questionObj?.selectedItem?.userInput
+            ? questionObj?.selectedItem?.userInput
+            : "N/A";
+
+        return `Question ${questionNumber}: \`${questionContent}\`, User answer: \`${userAnswer}\`, Correct Answer: \`${correctAnswer}\`, Input Answer: \`${userInput}\``;
+      })
+      .join("\n");
+  }
+
   const onPressSubmit = () => {
+    const result = formatQuestions(userChoice);
+
     fetch("https://juvenismaxime.com/wp-json/jm-quiz/client-result", {
       method: "POST",
       body: JSON.stringify({
@@ -56,7 +47,7 @@ export default function SimpleQuiz() {
         phone_number: userInfo.phone,
         year_of_birth: userInfo.birthYear,
         school: userInfo.school,
-        result: userChoice,
+        result: result,
       }),
     }).catch(() => {
       //
@@ -93,6 +84,7 @@ export default function SimpleQuiz() {
             setUserChoice={setUserChoice}
             userChoice={userChoice}
             onPressSubmit={onPressSubmit}
+            onChangeScreen={onChangeScreen.bind(null, 2)}
           />
         );
       default:

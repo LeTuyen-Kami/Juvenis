@@ -1,19 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../../components/Container";
 import Button from "../../components/Button";
+
+const extractImage = (text) => {
+  const regex = /(https?:\/\/[^\s]+)/;
+  const parts = text.split(regex);
+
+  return parts.map((part) => {
+    if (regex.test(part)) {
+      return { type: "img", value: part };
+    } else {
+      return { type: "text", value: part };
+    }
+  });
+};
 
 const MultipleChoice = ({
   question,
   options,
+  type,
   id,
   currentChoice,
   selectedItem,
   setSelectedItem,
   correctAnswerIndex,
+  onBlur,
 }) => {
   const isCorrect = selectedItem?.index === correctAnswerIndex;
+  const [text, setText] = useState("");
 
   const isSelected = !!selectedItem?.answer;
+
+  // useEffect(() => {
+  //   setText(selectedItem?.userInput || "");
+  // }, [selectedItem]);
 
   const renderStatus = () => {
     if (!isSelected) {
@@ -32,23 +52,55 @@ const MultipleChoice = ({
       <div className={"text-red-600 text-lg font-normal italic"}>
         The correct answer is “
         <span className={"text-red-600 text-lg font-bold"}>
-          {options[correctAnswerIndex]}
+          {options?.[correctAnswerIndex]}
         </span>
         ”.
       </div>
     );
   };
 
-  return (
-    <div
-      className={`text-base font-semibold mt-10 ${
-        currentChoice === id ? "" : "hidden"
-      }`}
-    >
-      <div className={" text-base"}>{question}</div>
+  const renderQuestion = () => {
+    const _question = extractImage(question);
+    return (
+      <div className={"text-base flex items-center flex-col"}>
+        {_question?.map((item, index) => {
+          if (item?.type === "img") {
+            return (
+              <img key={index} src={item?.value} className={"w-[50%] my-4"} />
+            );
+          }
+          return item?.value;
+        })}
+      </div>
+    );
+  };
+
+  const renderAnswer = () => {
+    if (type === "2") {
+      return (
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          className={
+            "w-full p-2 rounded-lg border-1 border-gray-300 focus:outline-1 focus:outline-blue-500 mt-5 min-h-[100px]"
+          }
+          placeholder={"Enter your answer here..."}
+          onBlur={() =>
+            onBlur({
+              id,
+              answer: "",
+              index: selectedItem?.index,
+              userInput: text,
+            })
+          }
+        />
+      );
+    }
+
+    return (
       <div className={"mt-5"}>
         {renderStatus()}
-        {options.map((option, index) => (
+        {options?.map((option, index) => (
           <div
             onClick={() => setSelectedItem({ id, answer: option, index })}
             key={index}
@@ -64,6 +116,17 @@ const MultipleChoice = ({
           </div>
         ))}
       </div>
+    );
+  };
+
+  return (
+    <div
+      className={`text-base font-semibold mt-10 ${
+        currentChoice === id ? "" : "hidden"
+      }`}
+    >
+      {renderQuestion()}
+      {renderAnswer()}
     </div>
   );
 };
@@ -74,13 +137,13 @@ const Screen3 = ({
   setUserChoice,
   userChoice,
   onPressSubmit,
+  onChangeScreen,
 }) => {
   const [currentChoice, setCurrentChoice] = useState(0);
   const [selectedItem, setSelectedItem] = useState({});
   const [choiceListIndex, setChoiceListIndex] = useState([]);
   const [canSelect, setCanSelect] = useState(true);
-
-  console.log(_selectedItem);
+  const [isFinish, setIsFinish] = useState(false);
 
   const category = data?.find((item) => {
     return item.id === _selectedItem.id;
@@ -90,10 +153,37 @@ const Screen3 = ({
     return {
       id: index,
       question: item.question,
-      list_answer: item.list_answer.split("|")?.map((item) => item.trim()),
+      list_answer: item.list_answer?.split("|")?.map((item) => item.trim()),
       correct_answer: +item.correct_answer - 1 || 0,
+      type: item?.type,
     };
   });
+
+  const onBlur = (_item) => {
+    setUserChoice((prev) => {
+      const existingChoiceIndex = prev.findIndex(
+        (item) => item?.index === currentChoice
+      );
+      if (existingChoiceIndex !== -1) {
+        // Update existing choice
+        const newChoices = [...prev];
+        newChoices[existingChoiceIndex] = {
+          ...prev[existingChoiceIndex],
+          selectedItem: _item,
+        };
+        return newChoices;
+      } else {
+        // Add new choice if it doesn't exist
+        return [
+          ...prev,
+          {
+            index: currentChoice,
+            selectedItem: _item,
+          },
+        ];
+      }
+    });
+  };
 
   const onPressItem = (_item) => {
     console.log("onPressItem", _item, canSelect);
@@ -120,22 +210,18 @@ const Screen3 = ({
     });
 
     //if last item choice then submit
-    if (currentChoice === listChoice.length - 1) {
-      onPressSubmit();
-    }
   };
 
   const onPressContinue = () => {
     //check if user choice then return
-    if (!selectedItem.answer) {
+
+    if (listChoice[currentChoice].type !== "2" && !selectedItem?.answer) {
       return;
     }
 
-    if (currentChoice === listChoice.length - 1) {
+    if (currentChoice === listChoice.length - 1 && isFinish) {
       return;
     }
-
-    console.log("chouce", choiceListIndex);
 
     if (choiceListIndex.includes(currentChoice + 1)) {
       console.log("1");
@@ -157,6 +243,10 @@ const Screen3 = ({
       }
       return prev + 1;
     });
+    if (currentChoice === listChoice.length - 1) {
+      onPressSubmit();
+      setIsFinish(true);
+    }
   };
 
   const onPressBack = () => {
@@ -177,6 +267,11 @@ const Screen3 = ({
     setSelectedItem(prevSelect?.selectedItem);
   };
 
+  useEffect(() => {
+    //clear userChoice
+    setUserChoice([]);
+  }, []);
+
   return (
     <div className={"mb-10"}>
       <div className={"text-center text-xl font-semibold"}>
@@ -196,11 +291,13 @@ const Screen3 = ({
               key={choice.id}
               question={choice.question}
               options={choice.list_answer}
+              type={choice?.type}
               correctAnswerIndex={choice.correct_answer}
               id={index}
               currentChoice={currentChoice}
               selectedItem={selectedItem}
               setSelectedItem={onPressItem}
+              onBlur={onBlur}
             />
           ))}
         </Container>
@@ -212,6 +309,7 @@ const Screen3 = ({
             }
             style={{
               color: "#024EA2",
+              display: currentChoice === 0 ? "none" : "block",
             }}
           >
             Back
@@ -223,14 +321,16 @@ const Screen3 = ({
             }
             style={{
               color: "#024EA2",
-              display:
-                currentChoice === listChoice.length - 1 ? "none" : "block",
             }}
           >
-            {/* {currentChoice === listChoice.length - 1 ? "Done" : "Continue"} */}
-            Continue
+            {currentChoice === listChoice.length - 1 ? "Finish" : "Continue"}
           </Button>
         </div>
+        {isFinish && (
+          <Button className={"mt-5"} onClick={onChangeScreen}>
+            Back to category
+          </Button>
+        )}
       </div>
     </div>
   );
