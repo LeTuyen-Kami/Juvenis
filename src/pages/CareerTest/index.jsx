@@ -4,8 +4,9 @@ import ScreenContainer from "../../components/ScreenContainer";
 import Screen1 from "./Screen1";
 import Screen3 from "./Screen3";
 import Screen4 from "./Screen4";
+import {data} from './fakeData'
 
-const data = window?.data_quiz || [];
+// const data = window?.data_quiz || [];
 
 const CareerTest = () => {
   const [screen, setScreen] = useState(1);
@@ -19,14 +20,17 @@ const CareerTest = () => {
   const stringResult = (_data) => {
     return Object.keys(_data)
       .map((key) => {
+        let point = 0;
         const table = data.find((item) => item.id === key);
         const question = table?.content?.list_question
           ?.map((item, index) => {
-            return `${item} (${+_data?.[key]?.[index] - 1 || 0});`;
+            const currentPoint = +_data?.[key]?.[index] - 1 || 0
+            point += currentPoint;
+            return `${item} (${currentPoint});`;
           })
           .join(" ");
 
-        return `${table?.title} : ${question}`;
+        return `${table?.title} : ${question} => Total Point: ${point}`;
       })
       .join("\n\n");
   };

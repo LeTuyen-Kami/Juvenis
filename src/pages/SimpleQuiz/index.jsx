@@ -31,7 +31,7 @@ export default function SimpleQuiz() {
             ? questionObj?.selectedItem?.userInput
             : "N/A";
 
-        return `Question ${questionNumber}: \`${questionContent}\`, User answer: \`${userAnswer}\`, Correct Answer: \`${correctAnswer}\`, Input Answer: \`${userInput}\``;
+        return `Question ${questionNumber}: ${questionContent}, User answer: ${userAnswer}, Correct Answer: ${correctAnswer}, Input Answer: ${userInput}`;
       })
       .join("\n");
   }
