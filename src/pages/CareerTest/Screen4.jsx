@@ -24,41 +24,59 @@ const Point = ({ title, value }) => {
   );
 };
 
-const Screen4 = ({ selectData, data, lang = "en" }) => {
-  const calculatePoint = () => {
-    const totalArray = Object.keys(selectData).map((key) => {
-      const item = selectData[key];
-      const itemArray = Object.values(item)
-        .map((item) => +item)
-        .filter((i) => i);
-      const total = itemArray.reduce((acc, curr) => {
-        return acc + (+curr - 1);
-      }, 0);
-      return {
-        id: key,
-        title: item.name,
-        value: total,
-      };
-    });
-    return totalArray;
-  };
+const calculatePoint = (selectData) => {
+  const totalArray = Object.keys(selectData).map((key) => {
+    const item = selectData[key];
+    const itemArray = Object.values(item)
+      .map((item) => +item)
+      .filter((i) => i);
+    const total = itemArray.reduce((acc, curr) => {
+      return acc + (+curr - 1);
+    }, 0);
+    return {
+      id: key,
+      title: item.name,
+      value: total,
+    };
+  });
+  return totalArray;
+};
 
-  const calulatedPoint = calculatePoint();
+export const calculateResult = (data, selectData) => {
+  const calulatedPoint = calculatePoint(selectData);
+
+  const sortedPoint = calulatedPoint.sort((a, b) => b.value - a.value);
+  console.log(sortedPoint);
+  const biggestPoint = sortedPoint[0].value;
+  const listTable = calulatedPoint.filter(
+    (item) => item.value === biggestPoint
+  );
+  //find all the data that match the biggest point
+  // const result = data?.find((table) => table.id === biggestPoint.id);
+  const result = data?.filter((table) =>
+    listTable.some((item) => item.id === table.id)
+  );
+  // return result?.content?.result;
+  return result?.map((item) => item.content?.result).join("<br><br>");
+};
+
+const Screen4 = ({ selectData, data, lang = "en" }) => {
+  const calulatedPoint = calculatePoint(selectData);
 
   const result = () => {
-    const sortedPoint = calulatedPoint.sort((a, b) => b.value - a.value);
-    console.log(sortedPoint);
-    const biggestPoint = sortedPoint[0].value;
-    const listTable = calulatedPoint.filter(
-      (item) => item.value === biggestPoint
-    );
-    //find all the data that match the biggest point
-    // const result = data?.find((table) => table.id === biggestPoint.id);
-    const result = data?.filter((table) =>
-      listTable.some((item) => item.id === table.id)
-    );
-    // return result?.content?.result;
-    return result?.map((item) => item.content?.result).join("<br><br>");
+    // const sortedPoint = calulatedPoint.sort((a, b) => b.value - a.value);
+    // console.log(sortedPoint);
+    // const biggestPoint = sortedPoint[0].value;
+    // const listTable = calulatedPoint.filter(
+    //   (item) => item.value === biggestPoint
+    // );
+    // //find all the data that match the biggest point
+    // // const result = data?.find((table) => table.id === biggestPoint.id);
+    // const result = data?.filter((table) =>
+    //   listTable.some((item) => item.id === table.id)
+    // );
+    // // return result?.content?.result;
+    // return result?.map((item) => item.content?.result).join("<br><br>");
   };
 
   return (
@@ -86,7 +104,9 @@ const Screen4 = ({ selectData, data, lang = "en" }) => {
           style={{
             listStyleType: "disc",
           }}
-          dangerouslySetInnerHTML={{ __html: result() }}
+          dangerouslySetInnerHTML={{
+            __html: calculateResult(data, selectData),
+          }}
           className="pt-10"
         ></div>
 
