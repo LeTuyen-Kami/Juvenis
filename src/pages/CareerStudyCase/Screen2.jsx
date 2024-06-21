@@ -1,14 +1,37 @@
 import { useState } from "react";
 import Container from "../../components/Container";
 import Button from "../../components/Button";
+import { extractImage } from "../../utils";
 
 const Question = ({ question, correct_answer }) => {
   const [text, setText] = useState("");
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
 
+  const renderQuestion = () => {
+    const _question = extractImage(question);
+    return (
+      <div className={"text-base flex items-center flex-col"}>
+        {_question?.map((item, index) => {
+          if (item?.type === "img") {
+            return (
+              <img key={index} src={item?.value} className={"w-[50%] my-4"} />
+            );
+          }
+          return (
+            <div
+              key={index}
+              dangerouslySetInnerHTML={{ __html: item?.value }}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <Container className={"py-10"}>
-      <div dangerouslySetInnerHTML={{ __html: question }}></div>
+      {/* <div dangerouslySetInnerHTML={{ __html: question }}></div> */}
+      {renderQuestion()}
       <div className={"mt-5"}>Your answer:</div>
       <textarea
         value={text}

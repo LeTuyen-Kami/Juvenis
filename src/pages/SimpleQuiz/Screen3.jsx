@@ -1,19 +1,7 @@
 import { useEffect, useState } from "react";
 import Container from "../../components/Container";
 import Button from "../../components/Button";
-
-const extractImage = (text) => {
-  const regex = /(https?:\/\/[^\s]+)/;
-  const parts = text.split(regex);
-
-  return parts.map((part) => {
-    if (regex.test(part)) {
-      return { type: "img", value: part };
-    } else {
-      return { type: "text", value: part };
-    }
-  });
-};
+import { extractImage } from "../../utils";
 
 const MultipleChoice = ({
   question,
