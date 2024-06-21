@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import CareerTest from "./pages/CareerTest";
 import SimpleQuiz from "./pages/SimpleQuiz";
+import CareerStudyCase from "./pages/CareerStudyCase";
 
 import "./App.css";
 
@@ -16,8 +17,9 @@ import "./App.css";
 // ];
 
 function App() {
-  return <CareerTest />;
+  // return <CareerTest />;
   // return <SimpleQuiz />;
+  return <CareerStudyCase />;
 
   // return (
   //   <Routes>

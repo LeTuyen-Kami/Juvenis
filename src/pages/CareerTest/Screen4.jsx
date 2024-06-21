@@ -24,8 +24,8 @@ const Point = ({ title, value }) => {
   );
 };
 
-const calculatePoint = (selectData) => {
-  const totalArray = Object.keys(selectData).map((key) => {
+export const calculatePoint = (selectData) => {
+  const totalArray = Object.keys(selectData || {}).map((key) => {
     const item = selectData[key];
     const itemArray = Object.values(item)
       .map((item) => +item)

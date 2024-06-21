@@ -3,7 +3,8 @@ import Info from "../../components/Info";
 import ScreenContainer from "../../components/ScreenContainer";
 import Screen1 from "./Screen1";
 import Screen3 from "./Screen3";
-import Screen4, { calculateResult } from "./Screen4";
+import Screen4, { calculateResult, calculatePoint } from "./Screen4";
+// import { data } from "./fakeData";
 // import { data } from "./fakeData";
 
 const data = window?.data_quiz || [];
@@ -18,23 +19,34 @@ const CareerTest = () => {
   };
 
   const stringResult = (_data) => {
+    const calulatedPoint = calculatePoint(_data);
+
+    const sortedPoint = calulatedPoint.sort((a, b) => b.value - a.value);
+
+    const biggestPoint = sortedPoint[0].value;
+
     return (
       Object.keys(_data)
         .map((key) => {
           let point = 0;
           const table = data.find((item) => item.id === key);
-          // const question = table?.content?.list_question
-          //   ?.map((item, index) => {
-          //     const currentPoint = +_data?.[key]?.[index] - 1 || 0;
-          //     point += currentPoint;
-          //     return `${item} (${currentPoint});`;
-          //   })
-          //   .join(" ");
 
-          return `${table?.title} : Total Point: ${point}`;
+          const question = table?.content?.list_question
+            ?.map((item, index) => {
+              const currentPoint = +_data?.[key]?.[index] - 1 || 0;
+              point += currentPoint;
+              return `${item} (${currentPoint});`;
+            })
+            .join(" ");
+
+          if (point === biggestPoint) {
+            return `${table?.title} : ${question} => Total Point: ${point} (Best)`;
+          }
+
+          return `${table?.title} => Total Point: ${point}`;
         })
-        .join("\n\n") +
-      "\n\nResult:" +
+        .join("<br>") +
+      "<br>Result:" +
       calculateResult(data, _data)
     );
   };

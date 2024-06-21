@@ -33,7 +33,7 @@ export default function SimpleQuiz() {
 
         return `Question ${questionNumber}: ${questionContent}, User answer: ${userAnswer}, Correct Answer: ${correctAnswer}, Input Answer: ${userInput}`;
       })
-      .join("\n");
+      .join("<br>");
   }
 
   const onPressSubmit = () => {
