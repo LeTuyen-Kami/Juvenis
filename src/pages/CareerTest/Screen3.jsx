@@ -22,8 +22,12 @@ const txt = {
   },
 };
 
-const Screen3 = ({ onChangeScreen, setSelectData, data, lang }) => {
+const Screen3 = ({ onChangeScreen, setSelectData, data, lang, selectData }) => {
   const [tableIndex, setTableIndex] = useState(0);
+
+  const enable =
+    Object.keys(selectData?.[data?.[tableIndex]?.id] || {})?.length - 1 ===
+    data?.[tableIndex]?.content?.list_question?.length;
 
   const onContinue = () => {
     if (tableIndex === data?.length - 1) {
@@ -85,7 +89,11 @@ const Screen3 = ({ onChangeScreen, setSelectData, data, lang }) => {
       <div className="md:hidden self-start">
         <ScoreDescriptions />
       </div>
-      <Button className={"mt-10"} onClick={onContinue}>
+      <Button
+        className={`mt-10 ${enable ? "bg-blue-500 mb-4" : "bg-gray-500 mb-4"}`}
+        disabled={!enable}
+        onClick={onContinue}
+      >
         {txt[lang].continue}
       </Button>
     </div>

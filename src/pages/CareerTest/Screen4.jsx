@@ -46,9 +46,19 @@ const Screen4 = ({ selectData, data, lang = "en" }) => {
   const calulatedPoint = calculatePoint();
 
   const result = () => {
-    const biggestTable = calulatedPoint.sort((a, b) => b.value - a.value)[0];
-    const result = data?.find((table) => table.id === biggestTable.id);
-    return result?.content?.result;
+    const sortedPoint = calulatedPoint.sort((a, b) => b.value - a.value);
+    console.log(sortedPoint);
+    const biggestPoint = sortedPoint[0].value;
+    const listTable = calulatedPoint.filter(
+      (item) => item.value === biggestPoint
+    );
+    //find all the data that match the biggest point
+    // const result = data?.find((table) => table.id === biggestPoint.id);
+    const result = data?.filter((table) =>
+      listTable.some((item) => item.id === table.id)
+    );
+    // return result?.content?.result;
+    return result?.map((item) => item.content?.result).join("<br><br>");
   };
 
   return (

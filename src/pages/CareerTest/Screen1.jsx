@@ -20,7 +20,7 @@ const txt = {
     start: "Bắt đầu",
     continue: "Tiếp tục",
     time: "Thời gian hoàn thành: 5 phút",
-    noteText: "Chọn điểm cao nhất đối với câu ph hợp nhất",
+    noteText: "Chọn điểm cao nhất đối với câu phù hợp nhất",
     note: "Lưu ý",
     title: "TRẮC NGHIỆM NGHỀ NGHIỆP",
     step: "Bước",

@@ -207,8 +207,8 @@ const Info = ({ onPressContinue, showTitle = true, language = "vi" }) => {
         <div className={"flex-1"} />
         <Button
           className={`mt-5 ${enable ? "bg-blue-500 mb-4" : "bg-gray-500 mb-4"}`}
-          onClick={_onChangeScreen}
           disabled={!enable}
+          onClick={_onChangeScreen}
         >
           {languageTxt[language].continue.label}
         </Button>
