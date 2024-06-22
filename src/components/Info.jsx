@@ -55,8 +55,8 @@ const languageTxt = {
       placeholder: "Enter name",
     },
     birthYear: {
-      label: "Birth year",
-      placeholder: "Enter birth year",
+      label: "Year of birth",
+      placeholder: "Enter year of birth",
     },
     email: {
       label: "Email",

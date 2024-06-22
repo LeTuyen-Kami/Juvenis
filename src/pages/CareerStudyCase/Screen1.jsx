@@ -45,7 +45,7 @@ const Item = ({ name, onClick, isSelected }) => {
   return (
     <div
       onClick={onClick}
-      className={` text-lg font-bold flex items-center justify-center  rounded-[30px] p-10 text-center w-[300px] hover:bg-indigo-100 cursor-pointer focus:outline-1 active:bg-indigo-400 active:text-white ${
+      className={` text-lg font-bold flex items-center justify-center  rounded-[30px] p-10 text-center w-[300px] hover:bg-indigo-400 hover:text-white cursor-pointer focus:outline-1 active:bg-indigo-400 active:text-white ${
         isSelected
           ? "bg-indigo-500 text-white hover:text-black"
           : "bg-indigo-50 text-black"

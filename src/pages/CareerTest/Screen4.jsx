@@ -57,7 +57,7 @@ export const calculateResult = (data, selectData) => {
     listTable.some((item) => item.id === table.id)
   );
   // return result?.content?.result;
-  return result?.map((item) => item.content?.result).join("<br><br>");
+  return result?.map((item) => item.content?.result).join("<br>");
 };
 
 const Screen4 = ({ selectData, data, lang = "en" }) => {

@@ -54,7 +54,11 @@ const MultipleChoice = ({
         {_question?.map((item, index) => {
           if (item?.type === "img") {
             return (
-              <img key={index} src={item?.value} className={"w-[50%] my-4"} />
+              <img
+                key={index}
+                src={item?.value}
+                className={"w-[400px] my-4 max-md:max-w-70vw]"}
+              />
             );
           }
           return item?.value;
@@ -161,10 +165,13 @@ const Screen3 = ({
         };
         return newChoices;
       } else {
+        const choice = listChoice[currentChoice];
+
         // Add new choice if it doesn't exist
         return [
           ...prev,
           {
+            ...choice,
             index: currentChoice,
             selectedItem: _item,
           },

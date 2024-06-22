@@ -3,6 +3,7 @@ import Info from "../../components/Info";
 import ScreenContainer from "../../components/ScreenContainer";
 import Screen2 from "./Screen2";
 import Screen3 from "./Screen3";
+// import { data } from "./fakeData";
 
 const data = window?.data_quiz || [];
 
@@ -23,13 +24,21 @@ export default function SimpleQuiz() {
         const questionContent = questionObj?.question;
         const userAnswer = questionObj?.selectedItem
           ? questionObj?.selectedItem?.answer
-          : "N/A";
+          : "";
         const correctAnswer =
           questionObj?.list_answer?.[questionObj?.correct_answer];
         const userInput =
           questionObj?.selectedItem && questionObj?.selectedItem?.userInput
             ? questionObj?.selectedItem?.userInput
-            : "N/A";
+            : "";
+
+        if (!userAnswer) {
+          return `Question ${questionNumber}: ${questionContent}, Input Answer: ${userInput}`;
+        }
+
+        if (!userInput) {
+          return `Question ${questionNumber}: ${questionContent}, User answer: ${userAnswer}, Correct Answer: ${correctAnswer}`;
+        }
 
         return `Question ${questionNumber}: ${questionContent}, User answer: ${userAnswer}, Correct Answer: ${correctAnswer}, Input Answer: ${userInput}`;
       })

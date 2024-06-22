@@ -10,7 +10,7 @@ const Question = ({ question, correct_answer }) => {
   const renderQuestion = () => {
     const _question = extractImage(question);
     return (
-      <div className={"text-base flex items-center flex-col"}>
+      <div className={"text-base flex flex-col"}>
         {_question?.map((item, index) => {
           if (item?.type === "img") {
             return (
@@ -30,8 +30,8 @@ const Question = ({ question, correct_answer }) => {
 
   return (
     <Container className={"py-10"}>
-      {/* <div dangerouslySetInnerHTML={{ __html: question }}></div> */}
-      {renderQuestion()}
+      <div dangerouslySetInnerHTML={{ __html: question }}></div>
+      {/* {renderQuestion()} */}
       <div className={"mt-5"}>Your answer:</div>
       <textarea
         value={text}
