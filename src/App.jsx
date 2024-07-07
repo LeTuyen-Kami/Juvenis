@@ -4,6 +4,7 @@ import SimpleQuiz from "./pages/SimpleQuiz";
 import CareerStudyCase from "./pages/CareerStudyCase";
 
 import "./App.css";
+import FAQ from "./pages/FAQ";
 
 // const routes = [
 //   {
@@ -19,7 +20,8 @@ import "./App.css";
 function App() {
   // return <CareerTest />;
   // return <SimpleQuiz />;
-  return <CareerStudyCase />;
+  // return <CareerStudyCase />;
+  return <FAQ />;
 
   // return (
   //   <Routes>

@@ -12,3 +12,53 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.closed {
+  .vertical {
+    transition: all 0.5s ease-in-out;
+    transform: rotate(-90deg);
+  }
+  .horizontal {
+    transition: all 0.5s ease-in-out;
+    transform: rotate(-90deg);
+    opacity: 1;
+  }
+}
+
+.opened {
+  opacity: 1;
+  .vertical {
+    transition: all 0.5s ease-in-out;
+    transform: rotate(90deg);
+  }
+  .horizontal {
+    transition: all 0.5s ease-in-out;
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+}
+
+.circle-plus {
+  position:relative;
+  opacity: .7;
+}
+
+
+.horizontal {
+    position: absolute;
+    width: 26px;
+    height: 3px;
+    left: 50%;
+    margin-left: -13px;
+    top: 50%;
+    margin-top: -1.5px;
+}
+.vertical {
+    position: absolute;
+    width: 3px;
+    height: 26px;
+    left: 50%;
+    margin-left: -1.5px;
+    top: 50%;
+    margin-top: -13px;
+}
