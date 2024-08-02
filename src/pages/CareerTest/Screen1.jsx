@@ -32,17 +32,17 @@ const txt = {
   },
 };
 
-const Step = ({ stepNumber, description, lang }) => (
-  <p className="mt-10 md:mt-10 md:max-w-full">
-    <span className="font-bold">
-      {txt[lang].step} {stepNumber}:
-    </span>{" "}
-    {description}
-  </p>
-);
+// const Step = ({ stepNumber, description, lang }) => (
+//   <p className="mt-10 md:mt-10 md:max-w-full">
+//     <span className="font-bold">
+//       {txt[lang].step} {stepNumber}:
+//     </span>{" "}
+//     {description}
+//   </p>
+// );
 
 const Screen1 = ({ onChangeScreen, lang = "en" }) => {
-  const steps = txt[lang].steps;
+  // const steps = txt[lang].steps;
 
   return (
     <section className="flex flex-col px-5 items-center w-full">
@@ -52,14 +52,14 @@ const Screen1 = ({ onChangeScreen, lang = "en" }) => {
       <Container className={"mb-10"}>
         <section className="w-full">
           <br />
-          {steps.map((description, idx) => (
+          {/* {steps.map((description, idx) => (
             <Step
               key={idx}
               stepNumber={idx + 1}
               description={description}
               lang={lang}
             />
-          ))}
+          ))} */}
         </section>
         <Button className={"my-10"} onClick={() => onChangeScreen(2)}>
           {txt[lang].continue}

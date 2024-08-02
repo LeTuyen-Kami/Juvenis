@@ -18,10 +18,10 @@ import FAQ from "./pages/FAQ";
 // ];
 
 function App() {
-  // return <CareerTest />;
+  return <CareerTest />;
   // return <SimpleQuiz />;
   // return <CareerStudyCase />;
-  return <FAQ />;
+  // return <FAQ />;
 
   // return (
   //   <Routes>
