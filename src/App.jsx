@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import CareerTest from "./pages/CareerTest";
 import SimpleQuiz from "./pages/SimpleQuiz";
 import CareerStudyCase from "./pages/CareerStudyCase";
+import ExperienceQuizz from "./pages/ExperienceQuizz";
 
 import "./App.css";
 import FAQ from "./pages/FAQ";
@@ -18,10 +19,11 @@ import FAQ from "./pages/FAQ";
 // ];
 
 function App() {
-  return <CareerTest />;
+  // return <CareerTest />;
   // return <SimpleQuiz />;
   // return <CareerStudyCase />;
   // return <FAQ />;
+  return <ExperienceQuizz />;
 
   // return (
   //   <Routes>

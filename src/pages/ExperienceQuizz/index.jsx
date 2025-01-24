@@ -3,13 +3,68 @@ import Info from "../../components/Info";
 import ScreenContainer from "../../components/ScreenContainer";
 import Screen2 from "./Screen2";
 import Screen3 from "./Screen3";
-import { data } from "./fakeData";
+import Sumary from "./Summary";
+// import { data } from "./fakeData";
 
-// const data = window?.data_quiz || [];
+const data = window?.data_quiz || [];
 
-export default function SimpleQuiz() {
+const fieldsConfig = [
+  {
+    key: "name",
+    label: { vi: "Họ & Tên", en: "Name" },
+    placeholder: { vi: "Nhập họ và tên", en: "Enter name" },
+    validation: (value) => value.length > 0,
+    errorMessages: {
+      vi: "Họ và tên không được để trống",
+      en: "Name is required",
+    },
+    colspan: 1,
+  },
+  {
+    key: "email",
+    label: { vi: "Email", en: "Email" },
+    placeholder: { vi: "Nhập email", en: "Enter email" },
+    validation: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+    errorMessages: { vi: "Email không hợp lệ", en: "Invalid email" },
+    colspan: 1,
+  },
+  {
+    key: "phone",
+    label: { vi: "Số điện thoại", en: "Phone" },
+    placeholder: { vi: "Nhập số điện thoại", en: "Enter phone" },
+    validation: (value) =>
+      /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(value),
+    errorMessages: {
+      vi: "Số điện thoại không hợp lệ",
+      en: "Invalid phone number",
+    },
+    colspan: 1,
+  },
+  {
+    key: "class",
+    label: { vi: "Lớp", en: "Class" },
+    placeholder: { vi: "Nhập lớp", en: "Enter class" },
+    validation: (value) => /^\d{1,2}$/.test(value),
+    errorMessages: { vi: "Lớp không hợp lệ", en: "Invalid class" },
+    colspan: 1,
+  },
+  {
+    key: "school",
+    label: { vi: "Tên trường học", en: "School" },
+    placeholder: { vi: "Nhập tên trường học", en: "Enter school" },
+    validation: (value) => value.length > 0,
+    errorMessages: {
+      vi: "Trường học không được để trống",
+      en: "School is required",
+    },
+    colspan: 2,
+  },
+];
+
+export default function ExperienceQuiz() {
   const [screen, setScreen] = useState(1);
-  const [selectedItem, setSelectedItem] = useState(null);
+  // const [selectedItem, setSelectedItem] = useState(data[0]);
+  const selectedItem = data[0];
   const [userChoice, setUserChoice] = useState([]);
   const [userInfo, setUserInfo] = useState({});
 
@@ -57,14 +112,14 @@ export default function SimpleQuiz() {
         full_name: userInfo.name,
         email: userInfo.email,
         phone_number: userInfo.phone,
-        year_of_birth: userInfo.birthYear,
-        school: userInfo.school,
+        school: `Class ${userInfo?.class} - School ${userInfo.school}`,
         result: result,
-        category: 2,
+        category: 4,
       }),
     }).catch(() => {
       //
     });
+    onChangeScreen(4);
   };
 
   const renderScreen = (screen) => {
@@ -77,16 +132,15 @@ export default function SimpleQuiz() {
               onChangeScreen(2);
               setUserInfo(info);
             }}
-            language="en"
+            fields={fieldsConfig}
+            language={selectedItem?.lang}
           />
         );
       case 2:
         return (
           <Screen2
             onChangeScreen={onChangeScreen.bind(null, 3)}
-            selectedItem={selectedItem}
-            onSelectItem={setSelectedItem}
-            data={data}
+            data={selectedItem?.content?.description}
           />
         );
       case 3:
@@ -100,6 +154,8 @@ export default function SimpleQuiz() {
             onChangeScreen={onChangeScreen.bind(null, 2)}
           />
         );
+      case 4:
+        return <Sumary answers={userChoice} language="en" />;
       default:
         return null;
     }
@@ -107,7 +163,9 @@ export default function SimpleQuiz() {
 
   return (
     <ScreenContainer>
-      <div className={"font-bold text-2xl text-center"}>CAREER QUIZZ</div>
+      <div className={"font-bold text-2xl text-center"}>
+        HEALTH SCIENCE JOB EXPLORATION{" "}
+      </div>
       {renderScreen(screen)}
     </ScreenContainer>
   );

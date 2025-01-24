@@ -10,24 +10,24 @@ import Screen2 from "./Screen2";
 // CCCC
 // BBBB
 
-// const data = [
-//   {
-//     title: "heheheh",
-//     content: {
-//       question: "What is the name of the company?",
-//       correct_answer: "Google",
-//     },
-//   },
-//   {
-//     title: "hahahah",
-//     content: {
-//       question: "What is the name of the company?",
-//       correct_answer: "Google",
-//     },
-//   },
-// ];
+const data = [
+  {
+    title: "heheheh",
+    content: {
+      question: "What is the name of the company?",
+      correct_answer: "Google",
+    },
+  },
+  {
+    title: "hahahah",
+    content: {
+      question: "What is the name of the company?",
+      correct_answer: "Google",
+    },
+  },
+];
 
-const data = window?.data_quiz || [];
+// const data = window?.data_quiz || [];
 
 const CareerStudyCase = () => {
   const [screen, setScreen] = useState(1);

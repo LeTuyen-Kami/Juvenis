@@ -4,10 +4,9 @@ import ScreenContainer from "../../components/ScreenContainer";
 import Screen1 from "./Screen1";
 import Screen3 from "./Screen3";
 import Screen4, { calculateResult, calculatePoint } from "./Screen4";
-// import { data } from "./fakeData";
-// import { data } from "./fakeData";
+import { data } from "./fakeData";
 
-const data = window?.data_quiz || [];
+// const data = window?.data_quiz || [];
 
 const CareerTest = () => {
   const [screen, setScreen] = useState(1);

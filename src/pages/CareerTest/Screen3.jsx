@@ -11,6 +11,23 @@ const columns = [
   { key: "column5", label: "5" },
 ];
 
+const descriptions = {
+  vi: [
+    { id: 1, text: "Chưa bao giờ đúng: 0 điểm" },
+    { id: 2, text: "Đúng trong một vài trường hợp: 1 điểm" },
+    { id: 3, text: "Đúng trong khoảng ½ trường hợp: 2 điểm" },
+    { id: 4, text: "Đúng trong đa số các trường hợp: 3 điểm" },
+    { id: 5, text: "Đúng trong tất cả trường hợp: 4 điểm" },
+  ],
+  en:[
+    { id: 1, text: "Never True: 0 points" },
+    { id: 2, text: "True in some cases: 1 point" },
+    { id: 3, text: "True in about half the cases: 2 points" },
+    { id: 4, text: "True in most cases: 3 points" },
+    { id: 5, text: "True in most cases: 3 points" },
+  ],
+}
+
 const txt = {
   en: {
     continue: "Continue",
@@ -83,11 +100,11 @@ const Screen3 = ({ onChangeScreen, setSelectData, data, lang, selectData }) => {
             right: "-14vw",
           }}
         >
-          <ScoreDescriptions />
+          <ScoreDescriptions lang={lang} />
         </div>
       </div>
       <div className="md:hidden self-start">
-        <ScoreDescriptions />
+        <ScoreDescriptions lang={lang} />
       </div>
       <Button
         className={`mt-10 ${enable ? "bg-blue-500 mb-4" : "bg-gray-500 mb-4"}`}
@@ -102,18 +119,15 @@ const Screen3 = ({ onChangeScreen, setSelectData, data, lang, selectData }) => {
 
 export default Screen3;
 
-const ScoreDescriptions = () => {
-  const descriptions = [
-    { id: 1, text: "Chưa bao giờ đúng: 0 điểm" },
-    { id: 2, text: "Đúng trong một vài trường hợp: 1 điểm" },
-    { id: 3, text: "Đúng trong khoảng ½ trường hợp: 2 điểm" },
-    { id: 4, text: "Đúng trong đa số các trường hợp: 3 điểm" },
-    { id: 5, text: "Đúng trong tất cả trường hợp: 4 điểm" },
-  ];
+const ScoreDescriptions = ({ lang }) => {
+
+
+  const desc = descriptions[lang];
+
 
   return (
     <section className="text-xs italic text-neutral-600">
-      {descriptions.map((description) => (
+      {desc.map((description) => (
         <p key={description.id}>
           ({description.id}) {description.text}
         </p>
