@@ -1,4 +1,4 @@
-const Summary = ({ answers, language = "vi" }) => {
+const Summary = ({ answers, language = "vi", userInfo }) => {
   // Tính số câu trả lời đúng
   const correctAnswersCount = answers.reduce(
     (count, answer) =>
@@ -13,6 +13,7 @@ const Summary = ({ answers, language = "vi" }) => {
       result: "You answered",
       outOf: "out of",
       correctly: "questions correctly.",
+      career: "Career you would like to explore",
       thanks: "Thanks for your participation!",
     },
     vi: {
@@ -20,6 +21,7 @@ const Summary = ({ answers, language = "vi" }) => {
       result: "Bạn đã trả lời đúng",
       outOf: "trên tổng số",
       correctly: "câu hỏi.",
+      career: "Lĩnh vực nghề nghiệp bạn muốn tìm hiểu",
       thanks: "Cảm ơn bạn đã tham gia!",
     },
   };
@@ -27,7 +29,7 @@ const Summary = ({ answers, language = "vi" }) => {
   const t = translations[language];
 
   return (
-    <div className={"mb-10 px-[10vw] flex flex-col gap-2 items-center"}>
+    <div className={"flex flex-col gap-2 items-center mb-10 px-[10vw]"}>
       <div className={"text-xl font-semibold"}>{t.title}</div>
       <div className={"text-lg"}>
         {t.result}{" "}
@@ -36,6 +38,9 @@ const Summary = ({ answers, language = "vi" }) => {
         </span>{" "}
         {t.outOf} <span className={"font-bold"}>{answers.length}</span>{" "}
         {t.correctly}
+      </div>
+      <div>
+        {t.career}: {userInfo.career}
       </div>
       <div>{t.thanks}</div>
     </div>

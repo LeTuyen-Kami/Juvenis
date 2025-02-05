@@ -59,6 +59,34 @@ const fieldsConfig = [
     },
     colspan: 2,
   },
+  {
+    key: "career",
+    label: {
+      vi: "Lĩnh vực nghề nghiệp bạn muốn tìm hiểu",
+      en: "Career you would like to explore",
+    },
+    placeholder: {
+      vi: "Nhập lĩnh vực nghề nghiệp",
+      en: "Enter career you would like to explore",
+    },
+    validation: (value) => value.length > 0,
+    errorMessages: {
+      vi: "Lĩnh vực nghề nghiệp không được để trống",
+      en: "Career you would like to explore is required",
+    },
+    colspan: 1,
+  },
+  {
+    key: "consultant",
+    label: { vi: "Tên cố vấn", en: "Please enter the consultant's name" },
+    placeholder: { vi: "Nhập tên cố vấn", en: "Enter the consultant's name" },
+    validation: (value) => value.length > 0,
+    errorMessages: {
+      vi: "Tên cố vấn không được để trống",
+      en: "The consultant's name is required",
+    },
+    colspan: 1,
+  },
 ];
 
 export default function ExperienceQuiz() {
@@ -112,7 +140,7 @@ export default function ExperienceQuiz() {
         full_name: userInfo.name,
         email: userInfo.email,
         phone_number: userInfo.phone,
-        school: `Class ${userInfo?.class} - School ${userInfo.school}`,
+        school: `Class ${userInfo?.class} - School ${userInfo.school} - Career ${userInfo.career} - Consultant ${userInfo.consultant}`,
         result: result,
         category: 4,
       }),
@@ -155,7 +183,9 @@ export default function ExperienceQuiz() {
           />
         );
       case 4:
-        return <Sumary answers={userChoice} language="en" />;
+        return (
+          <Sumary answers={userChoice} language="en" userInfo={userInfo} />
+        );
       default:
         return null;
     }
@@ -163,7 +193,7 @@ export default function ExperienceQuiz() {
 
   return (
     <ScreenContainer>
-      <div className={"font-bold text-2xl text-center"}>
+      <div className={"text-2xl font-bold text-center"}>
         HEALTH SCIENCE JOB EXPLORATION{" "}
       </div>
       {renderScreen(screen)}
