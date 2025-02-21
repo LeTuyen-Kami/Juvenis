@@ -12,11 +12,11 @@ const checkDevtoolsOpen = () => {
     return true;
   }
 
-  // const start = performance.now();
-  // //eslint-disable-next-line
-  // debugger;
-  // const end = performance.now();
-  // return end - start > 1000;
+  const start = performance.now();
+  //eslint-disable-next-line
+  debugger;
+  const end = performance.now();
+  return end - start > 1000;
 };
 
 const MAXVIOLATIONS = 4;
@@ -151,8 +151,6 @@ export default function QuizTime() {
         : data?.[0];
 
       setQuizData(finalData);
-
-      console.log("finalData", finalData, results);
 
       setTimeLeft((finalData?.content?.time_limit || 60) * 60 || 3600);
     });
@@ -332,7 +330,7 @@ export default function QuizTime() {
   return (
     <ScreenContainer>
       <div className={"text-2xl font-bold text-center"}>
-        {quizData?.title || "Quizz Time"}
+        {quizData?.title || "Placement Test"}
       </div>
       {renderScreen(screen)}
       {showSkipBtn && (
