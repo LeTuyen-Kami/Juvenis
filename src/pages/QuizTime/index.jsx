@@ -57,7 +57,7 @@ const fieldsConfig = [
     key: "class",
     label: { vi: "Lớp", en: "Class" },
     placeholder: { vi: "Nhập lớp", en: "Enter class" },
-    validation: (value) => /^\d{1,2}$/.test(value),
+    validation: (value) => value.length > 0,
     errorMessages: { vi: "Lớp không hợp lệ", en: "Invalid class" },
     colspan: 1,
   },
