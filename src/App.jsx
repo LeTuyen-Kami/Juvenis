@@ -26,7 +26,6 @@ function App() {
   // return <FAQ />;
   // return <ExperienceQuizz />;
   return <QuizTime />;
-
   // return (
   //   <Routes>
   //     {routes.map((route, index) => (

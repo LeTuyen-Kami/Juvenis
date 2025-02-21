@@ -91,15 +91,15 @@ const Info = ({
   };
 
   return (
-    <section className="flex flex-col items-center w-full px-5">
+    <section className="flex flex-col items-center px-5 w-full">
       {showTitle && (
         <h1 className="self-center mt-2 text-2xl font-bold text-black md:mt-0">
           {title}
         </h1>
       )}
-      <Container className={"items-center min-h-[50vh] justify-center"}>
+      <Container className={"justify-center items-center py-16"}>
         <div
-          className="grid w-full gap-4"
+          className="grid gap-4 w-full"
           style={{
             gridTemplateColumns: `repeat(${columns}, 1fr)`,
           }}

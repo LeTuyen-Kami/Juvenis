@@ -12,11 +12,11 @@ const checkDevtoolsOpen = () => {
     return true;
   }
 
-  const start = performance.now();
-  //eslint-disable-next-line
-  debugger;
-  const end = performance.now();
-  return end - start > 1000;
+  // const start = performance.now();
+  // //eslint-disable-next-line
+  // debugger;
+  // const end = performance.now();
+  // return end - start > 1000;
 };
 
 const MAXVIOLATIONS = 4;
@@ -91,6 +91,31 @@ const fieldsConfig = [
   },
 ];
 
+async function fetchQuizResults(quizType, lang) {
+  try {
+    const response = await fetch(
+      `https://juvenismaxime.com/wp-json/jm-quiz/get-quiz-result?type=${quizType}&lang=${lang}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const _data = await response.json();
+    return _data;
+  } catch (error) {
+    console.error("Error fetching quiz results:", error);
+  }
+}
+
+// Gọi API với loại quiz là "Personality"
+
 export default function QuizTime() {
   const [screen, setScreen] = useState(1);
   const [userChoice, setUserChoice] = useState([]);
@@ -111,13 +136,26 @@ export default function QuizTime() {
       setShowSkipBtn(true);
     }
 
-    // Filter data based on id from URL or get first item
-    const filteredData = id
-      ? data.find((item) => item.id === parseInt(id))
-      : data[0];
+    fetchQuizResults(5, "en").then((results) => {
+      const _data = results?.length > 0 ? results : data;
 
-    setQuizData(filteredData ? filteredData : data[0]);
-    setTimeLeft(quizData?.content?.time_limit || 3600);
+      // Filter data based on id from URL or get first item
+      const filteredData = id
+        ? _data.find((item) => item.id === parseInt(id))
+        : _data[0];
+
+      const finalData = filteredData
+        ? filteredData
+        : _data?.[0]
+        ? _data[0]
+        : data?.[0];
+
+      setQuizData(finalData);
+
+      console.log("finalData", finalData, results);
+
+      setTimeLeft((finalData?.content?.time_limit || 60) * 60 || 3600);
+    });
   }, []);
 
   useEffect(() => {
