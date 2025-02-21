@@ -6,6 +6,7 @@ import ExperienceQuizz from "./pages/ExperienceQuizz";
 
 import "./App.css";
 import FAQ from "./pages/FAQ";
+import QuizTime from "./pages/QuizTime";
 
 // const routes = [
 //   {
@@ -23,7 +24,8 @@ function App() {
   // return <SimpleQuiz />;
   // return <CareerStudyCase />;
   // return <FAQ />;
-  return <ExperienceQuizz />;
+  // return <ExperienceQuizz />;
+  return <QuizTime />;
 
   // return (
   //   <Routes>
