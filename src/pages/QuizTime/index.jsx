@@ -114,6 +114,10 @@ async function fetchQuizResults(quizType, lang) {
   }
 }
 
+const toSlug = (str) => {
+  return str.toLowerCase().replace(/ /g, "-");
+};
+
 // Gọi API với loại quiz là "Personality"
 
 export default function QuizTime() {
@@ -129,7 +133,9 @@ export default function QuizTime() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+
     const id = urlParams.get("id");
+    const slug = urlParams.get("slug");
     const _showSkip = urlParams.get("showSkipBtn");
 
     if (_showSkip === "true") {
@@ -140,8 +146,11 @@ export default function QuizTime() {
       const _data = results?.length > 0 ? results : data;
 
       // Filter data based on id from URL or get first item
+
       const filteredData = id
-        ? _data.find((item) => item.id === parseInt(id))
+        ? _data.find((item) => item.id == id)
+        : slug
+        ? _data.find((item) => toSlug(item.title) == slug)
         : _data[0];
 
       const finalData = filteredData

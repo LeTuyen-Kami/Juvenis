@@ -147,6 +147,8 @@ const QuizScreen = ({
       .findIndex((q) => q.id === flattenedQuestions[currentQuestion]?.id) + 1 ||
     0;
 
+  console.log("userChoice", userChoice);
+
   return (
     <div className={"mb-10"}>
       <div className={"text-xl font-bold text-center text-red-600"}>
@@ -201,13 +203,28 @@ const QuizScreen = ({
                 });
               }}
               onBlur={(item) => {
-                setUserChoice((prev) => [
-                  ...prev,
-                  {
-                    ...question,
-                    selectedItem: item,
-                  },
-                ]);
+                setUserChoice((prev) => {
+                  const existingIndex = prev.findIndex(
+                    (choice) => choice.id === question.id
+                  );
+                  if (existingIndex !== -1) {
+                    // Replace existing choice
+                    const newChoices = [...prev];
+                    newChoices[existingIndex] = {
+                      ...question,
+                      selectedItem: item,
+                    };
+                    return newChoices;
+                  }
+                  // Add new choice
+                  return [
+                    ...prev,
+                    {
+                      ...question,
+                      selectedItem: item,
+                    },
+                  ];
+                });
               }}
             />
           ))}
