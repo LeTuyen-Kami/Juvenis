@@ -94,7 +94,7 @@ const fieldsConfig = [
 async function fetchQuizResults(quizType, lang) {
   try {
     const response = await fetch(
-      `https://juvenismaxime.com/wp-json/jm-quiz/get-quiz-result?type=${quizType}&lang=${lang}`,
+      `https://proxycached.onrender.com/get-quiz-result?type=${quizType}&lang=${lang}`,
       {
         method: "GET",
         headers: {
@@ -108,7 +108,7 @@ async function fetchQuizResults(quizType, lang) {
     }
 
     const _data = await response.json();
-    return _data;
+    return _data?.data || [];
   } catch (error) {
     console.error("Error fetching quiz results:", error);
   }
