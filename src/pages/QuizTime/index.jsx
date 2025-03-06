@@ -4,7 +4,7 @@ import ScreenContainer from "../../components/ScreenContainer";
 import QuizScreen from "./QuizScreen";
 import { data as defaultData } from "./fakeData";
 import CompletionScreen from "./CompletionScreen";
-
+import { toast, ToastContainer } from "react-toastify";
 const data = window?.data_quiz || defaultData;
 
 const checkDevtoolsOpen = () => {
@@ -130,6 +130,8 @@ export default function QuizTime() {
   const intervalId = useRef(null);
   const [quizData, setQuizData] = useState([]);
   const [showSkipBtn, setShowSkipBtn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -142,27 +144,36 @@ export default function QuizTime() {
       setShowSkipBtn(true);
     }
 
-    fetchQuizResults(5, "en").then((results) => {
-      const _data = results?.length > 0 ? results : data;
+    setIsLoading(true);
+    fetchQuizResults(5, "en")
+      .then((results) => {
+        const _data = results?.length > 0 ? results : data;
 
-      // Filter data based on id from URL or get first item
+        // Filter data based on id from URL or get first item
 
-      const filteredData = id
-        ? _data.find((item) => item.id == id)
-        : slug
-        ? _data.find((item) => toSlug(item.title) == slug)
-        : _data[0];
+        const filteredData = id
+          ? _data.find((item) => item.id == id)
+          : slug
+          ? _data.find((item) => toSlug(item.title) == slug)
+          : _data[0];
 
-      const finalData = filteredData
-        ? filteredData
-        : _data?.[0]
-        ? _data[0]
-        : data?.[0];
+        const finalData = filteredData
+          ? filteredData
+          : _data?.[0]
+          ? _data[0]
+          : data?.[0];
 
-      setQuizData(finalData);
+        setQuizData(finalData);
 
-      setTimeLeft((finalData?.content?.time_limit || 60) * 60 || 3600);
-    });
+        setTimeLeft((finalData?.content?.time_limit || 60) * 60 || 3600);
+      })
+      .catch(() => {
+        setIsError(true);
+        toast.error("Something went wrong, please try again later!");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -171,7 +182,9 @@ export default function QuizTime() {
       const handleVisibilityChange = () => {
         if (document.hidden) {
           setViolations((prev) => prev + 1);
-          alert("Warning: Switching tabs is not allowed during the quiz!");
+          toast.error(
+            "Warning: Switching tabs is not allowed during the quiz!"
+          );
         }
       };
 
@@ -179,7 +192,7 @@ export default function QuizTime() {
       const handleCopyPaste = (e) => {
         e.preventDefault();
         setViolations((prev) => prev + 1);
-        alert("Warning: Copy/Paste is not allowed during the quiz!");
+        toast.error("Warning: Copy/Paste is not allowed during the quiz!");
       };
 
       // Prevent browser navigation
@@ -196,7 +209,7 @@ export default function QuizTime() {
       intervalId.current = setInterval(() => {
         if (checkDevtoolsOpen()) {
           setViolations(MAXVIOLATIONS);
-          alert("Warning: Devtools are open during the quiz!");
+          toast.error("Warning: Devtools are open during the quiz!");
           if (intervalId.current) {
             clearInterval(intervalId.current);
           }
@@ -308,6 +321,7 @@ export default function QuizTime() {
         return (
           <Info
             showTitle={false}
+            isLoading={isLoading}
             onPressContinue={(info) => {
               setScreen(2);
               setUserInfo(info);
@@ -350,6 +364,7 @@ export default function QuizTime() {
           Skip Time
         </button>
       )}
+      <ToastContainer />
     </ScreenContainer>
   );
 }

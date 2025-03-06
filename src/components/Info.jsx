@@ -63,6 +63,7 @@ const Info = ({
   fields = fieldsConfig,
   title = "FORM",
   columns = 2, // Số cột mặc định
+  isLoading = false,
 }) => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
@@ -139,10 +140,10 @@ const Info = ({
         </div>
         <Button
           className={`mt-5 ${isFormValid ? "bg-blue-500" : "bg-gray-500"}`}
-          disabled={!isFormValid}
+          disabled={!isFormValid || isLoading}
           onClick={handleSubmit}
         >
-          Continue
+          {isLoading ? "Loading..." : "Continue"}
         </Button>
       </Container>
     </section>
