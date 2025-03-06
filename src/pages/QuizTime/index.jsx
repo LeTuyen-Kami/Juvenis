@@ -309,6 +309,7 @@ export default function QuizTime() {
         school: `class ${userInfo.class} - school ${userInfo.school} - career ${userInfo.career}`,
         result: result,
         category: quizData?.category || 5,
+        title: quizData?.title,
       }),
     }).catch(() => {
       //
