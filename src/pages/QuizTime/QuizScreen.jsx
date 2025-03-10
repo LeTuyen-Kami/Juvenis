@@ -147,8 +147,6 @@ const QuizScreen = ({
       .findIndex((q) => q.id === flattenedQuestions[currentQuestion]?.id) + 1 ||
     0;
 
-  console.log("userChoice", userChoice);
-
   return (
     <div className={"mb-10"}>
       <div className={"text-xl font-bold text-center text-red-600"}>
@@ -164,7 +162,7 @@ const QuizScreen = ({
         </div>
         <div className={"self-start px-[15vw] text-base text-[#024EA2]"}>
           Question {currentQuestionInSection} of {questionsInCurrentSection}{" "}
-          (Section: {currentSection})
+          {currentSection && `(${currentSection})`}
         </div>
 
         <Container className={"mt-2"}>

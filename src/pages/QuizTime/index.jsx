@@ -8,15 +8,14 @@ import { toast, ToastContainer } from "react-toastify";
 const data = window?.data_quiz || defaultData;
 
 const checkDevtoolsOpen = () => {
-  if (window.devtools) {
-    return true;
-  }
-
-  const start = performance.now();
-  //eslint-disable-next-line
-  debugger;
-  const end = performance.now();
-  return end - start > 1000;
+  // if (window.devtools) {
+  //   return true;
+  // }
+  // const start = performance.now();
+  // //eslint-disable-next-line
+  // debugger;
+  // const end = performance.now();
+  // return end - start > 1000;
 };
 
 const MAXVIOLATIONS = 4;
@@ -315,6 +314,8 @@ export default function QuizTime() {
       //
     });
   };
+
+  console.log("quizData", quizData);
 
   const renderScreen = (screen) => {
     switch (screen) {
