@@ -162,7 +162,6 @@ const QuizScreen = ({
         </div>
         <div className={"self-start px-[15vw] text-base text-[#024EA2]"}>
           Question {currentQuestionInSection} of {questionsInCurrentSection}{" "}
-          {currentSection && `(${currentSection})`}
         </div>
 
         <Container className={"mt-2"}>
